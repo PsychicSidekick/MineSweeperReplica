@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.62461823, g: 1, b: 0.5981132, a: 1}
@@ -147,8 +147,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1423ee3cf92fc6d4b8da7fafc1a6f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {x: 0, y: 0}
   btn: {fileID: 3723093055604673967}
   revealed: 0
+  mineNearby: 0
+  mined: 0
+  adjacentTileObjs: []
 --- !u!1 &3723093056084031029
 GameObject:
   m_ObjectHideFlags: 0
