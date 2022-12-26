@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Vector2 size;
+    public static GameManager instance;
+
+    public List<List<GameObject>> tileBoard = new List<List<GameObject>>();
+
+    public Vector2Int size;
     public GameObject tilePrefab;
     public Transform gamePanel;
 
     float tileSize;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -22,11 +31,17 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < size.x; i++)
         {
+            List<GameObject> row = new List<GameObject>();
+
             for (int j = 0; j < size.y; j++)
             {
                 GameObject newTile = Instantiate(tilePrefab, gamePanel.transform);
                 newTile.transform.localPosition = firstTilePos + new Vector2(i * tileSize, -j * tileSize);
+                newTile.GetComponent<Tile>().pos = new Vector2Int(i, j); 
+                row.Add(newTile);
             }
+
+            tileBoard.Add(row);
         }
     }
 
