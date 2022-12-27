@@ -36,6 +36,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             txt.text = adjMineCount.ToString();
             revealed = true;
             img.color = Color.green;
+            GameManager.instance.CheckWin();
             return;
         }
 
@@ -50,9 +51,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             }
             tileObj.GetComponent<Tile>().Reveal();
         }
+
+        GameManager.instance.CheckWin();
     }
 
-    //only works if correct no. of flags nearby, explodes mines if incorrectly flagged
     public void RevealAdjacent()
     {
         CountAdjMines(adjTileObjs);
@@ -70,6 +72,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             }
             tile.Reveal();
         }
+
+        GameManager.instance.CheckWin();
     }
 
     public void FlagMine()

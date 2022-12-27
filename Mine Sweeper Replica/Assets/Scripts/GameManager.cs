@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
 
     public List<List<GameObject>> tileBoard = new List<List<GameObject>>();
 
-    public List<Tile> mines = new List<Tile>();
-
     public Vector2Int size;
     public int mineCount;
     public GameObject tilePrefab;
@@ -52,7 +50,20 @@ public class GameManager : MonoBehaviour
 
     public void CheckWin()
     {
+        for (int i = 0; i < size.x; i++)
+        {
+            for (int j = 0; j < size.y; j++)
+            {
+                Tile tile = tileBoard[i][j].GetComponent<Tile>();
 
+                if (!tile.mined && !tile.revealed)
+                {
+                    return;
+                }
+            }
+        }
+
+        Debug.Log("You Win");
     }
 
     public void AddRandomMines()
@@ -72,7 +83,6 @@ public class GameManager : MonoBehaviour
             }
 
             selectedTile.mined = true;
-            mines.Add(selectedTile);
             remainingMines -= 1;
         }
 

@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad98f8ee01175f84da6145f7f9df620f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 10, y: 10}
+  size: {x: 9, y: 9}
   mineCount: 10
   tilePrefab: {fileID: 3723093055604673954, guid: 2a7f592e15d9d0247bde30b419f93ea3, type: 3}
   gamePanel: {fileID: 1983146218}
