@@ -12,15 +12,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public Vector2Int pos;
     public bool revealed = false;
-    public int adjacentMineCount;
+    public int adjMineCount;
     public bool mined;
     public bool flagged = false;
-    public List<GameObject> adjacentTileObjs;
+    public int adjFlagCount = 0;
+    public List<GameObject> adjTileObjs;
 
     private void Start()
     {
-        adjacentTileObjs = GetAdjacentTiles(this);
-        adjacentMineCount = CountAdjacentMines(adjacentTileObjs);
+        adjTileObjs = GetAdjacentTiles(this);
+        CountAdjMines(adjTileObjs);
     }
 
     public void Reveal()
@@ -30,9 +31,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        if (adjacentMineCount > 0)
+        if (adjMineCount > 0)
         {
-            txt.text = adjacentMineCount.ToString();
+            txt.text = adjMineCount.ToString();
             revealed = true;
             img.color = Color.green;
             return;
@@ -41,7 +42,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         revealed = true;
         img.color = Color.green;
 
-        foreach (GameObject tileObj in adjacentTileObjs)
+        foreach (GameObject tileObj in adjTileObjs)
         {
             if (tileObj.GetComponent<Tile>().revealed)
             {
@@ -51,12 +52,22 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    //only works if correct no. of flags nearby, explodes mines if incorrectly flagged
     public void RevealAdjacent()
     {
-        foreach (GameObject tileObj in adjacentTileObjs)
+        CountAdjMines(adjTileObjs);
+        if (adjFlagCount != adjMineCount)
+        {
+            return;
+        }
+
+        foreach (GameObject tileObj in adjTileObjs)
         {
             Tile tile = tileObj.GetComponent<Tile>();
-
+            if(!tile.flagged && tile.mined)
+            {
+                tile.Explode();
+            }
             tile.Reveal();
         }
     }
@@ -71,8 +82,14 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         else
         {
             flagged = true;
-            img.color = Color.red;
+            img.color = Color.yellow;
         }
+    }
+
+    public void Explode()
+    {
+        img.color = Color.red;
+        Debug.Log("You Lose");
     }
 
     public List<GameObject> GetAdjacentTiles(Tile tile)
@@ -105,9 +122,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         return adjacentTiles;
     }
 
-    public int CountAdjacentMines(List<GameObject> adjacentTiles)
+    public void CountAdjMines(List<GameObject> adjacentTiles)
     {
         int mineCount = 0;
+        int flagCount = 0;
 
         foreach (GameObject tile in adjacentTiles)
         {
@@ -115,24 +133,35 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             {
                 mineCount++;
             }
+
+            if (tile.GetComponent<Tile>().flagged == true)
+            {
+                flagCount++;
+            }
         }
 
-        return mineCount;
+        adjFlagCount = flagCount;
+        adjMineCount = mineCount;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (revealed)
+        if (eventData.button == PointerEventData.InputButton.Left && !flagged)
         {
-            RevealAdjacent();
-            return;
+            if (revealed)
+            {
+                RevealAdjacent();
+            }
+            else if (mined)
+            {
+                Explode();
+            }
+            else
+            {
+                Reveal();
+            }
         }
-
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            Reveal();
-        }
-        else if (eventData.button == PointerEventData.InputButton.Right)
+        else if (eventData.button == PointerEventData.InputButton.Right && !revealed)
         {
             FlagMine();
         }

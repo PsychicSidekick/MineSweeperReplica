@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 10, y: 10}
+  mineCount: 10
   tilePrefab: {fileID: 3723093055604673954, guid: 2a7f592e15d9d0247bde30b419f93ea3, type: 3}
   gamePanel: {fileID: 1983146218}
 --- !u!1 &519420028

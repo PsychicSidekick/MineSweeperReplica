@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public List<List<GameObject>> tileBoard = new List<List<GameObject>>();
 
+    public List<Tile> mines = new List<Tile>();
+
     public Vector2Int size;
     public int mineCount;
     public GameObject tilePrefab;
@@ -23,13 +25,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         tileSize = tilePrefab.GetComponent<RectTransform>().rect.width;
-        initiateTiles();
-        addRandomMines();
+        InitiateTiles();
+        AddRandomMines();
     }
 
-    public void initiateTiles()
+    public void InitiateTiles()
     {
-        Vector2 firstTilePos = findFirstTilePos();
+        Vector2 firstTilePos = FindFirstTilePos();
 
         for (int i = 0; i < size.x; i++)
         {
@@ -48,7 +50,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void addRandomMines()
+    public void CheckWin()
+    {
+
+    }
+
+    public void AddRandomMines()
     {
         int remainingMines = mineCount;
 
@@ -65,12 +72,13 @@ public class GameManager : MonoBehaviour
             }
 
             selectedTile.mined = true;
+            mines.Add(selectedTile);
             remainingMines -= 1;
         }
 
     }
 
-    public Vector2 findFirstTilePos()
+    public Vector2 FindFirstTilePos()
     {
         Vector2 firstTilePos = new Vector2(0, 0);
 
