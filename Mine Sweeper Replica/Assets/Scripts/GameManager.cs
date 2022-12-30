@@ -34,8 +34,6 @@ public class GameManager : MonoBehaviour
 
         instance = this;
 
-
-
         SceneManager.sceneLoaded += OnSceneLoaded;
         DontDestroyOnLoad(gameObject);
     }
@@ -46,12 +44,6 @@ public class GameManager : MonoBehaviour
         {
             Initiate();
         }
-
-        if(scene.name == "Title")
-        {
-            startBtn = GameObject.Find("StartButton").GetComponent<Button>();
-            startBtn.onClick.AddListener(StartButton);
-        }
     }
 
     private void Initiate()
@@ -61,11 +53,6 @@ public class GameManager : MonoBehaviour
         gamePanel = GameObject.Find("Canvas/TilePanel").transform;
         winPanel = GameObject.Find("Canvas/WinPanel");
         gameoverPanel = GameObject.Find("Canvas/GameoverPanel");
-
-        returnTitleBtn1 = GameObject.Find("Return1").GetComponent<Button>();
-        returnTitleBtn2 = GameObject.Find("Return2").GetComponent<Button>();
-        returnTitleBtn1.onClick.AddListener(ReturnToTitle);
-        returnTitleBtn2.onClick.AddListener(ReturnToTitle);
 
         winPanel.SetActive(false);
         gameoverPanel.SetActive(false);
@@ -147,15 +134,5 @@ public class GameManager : MonoBehaviour
         firstTilePos.y = Mathf.Floor(size.y / 2) * tileSize - yOffSet;
 
         return firstTilePos;
-    }
-
-    public void StartButton()
-    {
-        SceneManager.LoadScene("Main");
-    }
-
-    public void ReturnToTitle()
-    {
-        SceneManager.LoadScene("Title");
     }
 }
