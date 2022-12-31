@@ -18,44 +18,15 @@ public class GameManager : MonoBehaviour
     public GameObject winPanel;
     public GameObject gameoverPanel;
 
-    public Button startBtn;
-    public Button returnTitleBtn1;
-    public Button returnTitleBtn2;
-
     float tileSize;
 
-    private void Awake()
+    private void Start()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         instance = this;
+        size = new Vector2Int(PlayerPrefs.sizeX, PlayerPrefs.sizeY);
+        mineCount = PlayerPrefs.mineCount;
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name == "Main")
-        {
-            Initiate();
-        }
-    }
-
-    private void Initiate()
-    {
         tileBoard = new List<List<Tile>>();
-
-        gamePanel = GameObject.Find("Canvas/TilePanel").transform;
-        winPanel = GameObject.Find("Canvas/WinPanel");
-        gameoverPanel = GameObject.Find("Canvas/GameoverPanel");
-
-        winPanel.SetActive(false);
-        gameoverPanel.SetActive(false);
 
         tileSize = tilePrefab.GetComponent<RectTransform>().rect.width;
         InitiateTiles();
