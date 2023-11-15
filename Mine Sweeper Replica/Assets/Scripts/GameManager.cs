@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         instance = this;
-        size = new Vector2Int(PlayerPrefs.sizeX, PlayerPrefs.sizeY);
-        mineCount = PlayerPrefs.mineCount;
+        size = new Vector2Int(PlayerPrefs.GetInt("sizeX"), PlayerPrefs.GetInt("sizeY"));
+        mineCount = PlayerPrefs.GetInt("mineCount");
 
         tileBoard = new List<List<Tile>>();
 
