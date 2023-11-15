@@ -19,12 +19,12 @@ public class Settings : MonoBehaviour
 
         xSlider.onValueChanged.AddListener((value) =>
         {
-            mineSlider.maxValue = PlayerPrefs.sizeX * PlayerPrefs.sizeY;
+            mineSlider.maxValue = xSlider.value * ySlider.value;
             xTxt.text = value.ToString();
         });
         ySlider.onValueChanged.AddListener((value) =>
         {
-            mineSlider.maxValue = PlayerPrefs.sizeX * PlayerPrefs.sizeY;
+            mineSlider.maxValue = xSlider.value * ySlider.value;
             yTxt.text = value.ToString();
         });
         mineSlider.onValueChanged.AddListener((value) =>
